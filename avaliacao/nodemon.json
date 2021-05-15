@@ -1,0 +1,5 @@
+{
+    "env": {
+        "URI_BD": "mongodb://localhost/exemploarquivos"
+    }
+}
