@@ -10,9 +10,9 @@ export enum STATUS {
     OK = 'Ok',
     REGISTER_ERROR = 'An error occurred while trying to register the user',
     NOT_AUTHORIZED = 'User not authorized',
-     ERRO_EMAIL =   '  USER ALREADY REGISTERED WITH THIS EMAIL ADDRESS',
-        
-
+    ERRO_EMAIL =   '  USER ALREADY REGISTERED WITH THIS EMAIL ADDRESS',    
+    ASSOCIATE_OK = 'Successful association',
+    INVALID_ASSOCIATE = 'User already associated with this app'
 }
 @Entity()
 export class User {

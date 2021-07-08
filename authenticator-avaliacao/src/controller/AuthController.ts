@@ -1,3 +1,4 @@
+import { UserToApp } from './../entity/UserToApp';
 import { NextFunction, Request, Response } from "express"
 import { getManager } from "typeorm"
 import { verify } from 'jsonwebtoken'
@@ -35,6 +36,11 @@ export class AuthController {
     async findAppById(id_app: string): Promise<App> {
         const app = await getManager().findOne(App, { id_app:id_app} )
         return app
+    }
+
+    async findEmailUserInUserToApp(email: string): Promise<UserToApp>{
+        const userToApp = await getManager().findOne(UserToApp, { email: email })
+        return userToApp
     }
 
     async findSecreetApp(secret: string): Promise<App> {

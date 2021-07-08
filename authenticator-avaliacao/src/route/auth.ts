@@ -71,16 +71,16 @@ authRouter.post('/app/register', async (req, res) => {
         const AppDB= await authCtrl.findAppById(id_app)
         try{
             id_app == AppDB.id_app
-            return res.status(500).json({message: STATUSAPP.INVALID_ID_APP})
+            return res.status(400).json({message: STATUSAPP.INVALID_ID_APP})
         } catch(error){
           
         }
-            try{
-                secret == secretApp.secret
-                return res.status(500).json({message: STATUSAPP.INVALID_SECRET})
-            } catch(error){
+        try{
+            secret == secretApp.secret
+            return res.status(400).json({message: STATUSAPP.INVALID_SECRET})
+        } catch(error){
     
-            } 
+        } 
         try {
             const savedApp = await authCtrl.registerApp(app)
             return res.json(savedApp)
@@ -96,15 +96,29 @@ authRouter.post('/app/associate', async (req, res) => {
     const { email, id_app } = req.body
     
     const authCtrl = new AuthController()
+
     const user = await authCtrl.findUserByEmail(email)
     const userEmail= user.email
+
     const app = await authCtrl.findAppById(id_app)
-    const appId= app.id_app
-    console.log(userEmail, appId)
-    const userToApp = new UserToApp()
-    userToApp.email = userEmail
-    userToApp.id_app= app.id_app
-    authCtrl.associateUserToApp(userToApp)
+    const appId = app.id_app
+
+    const email_saved = await authCtrl.findEmailUserInUserToApp(userEmail)
+
+    if( email === email_saved){
+        return res.status(400).json({message: STATUS.INVALID_ASSOCIATE})
+    }
+
+    try{
+        const userToApp = new UserToApp()
+        userToApp.email = userEmail
+        userToApp.id_app= appId
+        const associate = await authCtrl.associateUserToApp(userToApp)
+        return res.json(associate)
+        
+    }catch(error){
+        return res.status(500).json({message: STATUS.INVALID_ASSOCIATE})
+    }
     
 })
 
