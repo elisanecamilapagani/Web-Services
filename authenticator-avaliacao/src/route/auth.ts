@@ -8,7 +8,7 @@ import { SECRET } from '../config/secret'
 
 export const authRouter = Router()
 
-authRouter.post('/register', async (req, res) => {
+authRouter.post('/user/register', async (req, res) => {
     const { email, name, password } = req.body
 
     const user: User = new User(email, name, password)

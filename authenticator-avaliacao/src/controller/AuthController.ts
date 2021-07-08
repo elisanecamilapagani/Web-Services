@@ -52,7 +52,8 @@ export class AuthController {
     async associateUserToApp(user: User, app: App) {
         console.log(user, 'APP')
        console.log(app,'USER')
-        await getConnection().createQueryBuilder().relation(User, "apps").of(user).add(app)
+        await getConnection().createQueryBuilder().relation(User, "app").of(user).add(app)
+        await getManager().save(user.email, app.id_app)
     }
 
 
