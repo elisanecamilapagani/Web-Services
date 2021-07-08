@@ -5,6 +5,7 @@ import { AuthController } from '../controller/AuthController'
 import { STATUS, User } from '../entity/User'
 import { App, STATUSAPP } from '../entity/Apps'
 import { SECRET } from '../config/secret'
+import { UserToApp } from '../entity/UserToApp'
 
 export const authRouter = Router()
 
@@ -91,19 +92,20 @@ authRouter.post('/app/register', async (req, res) => {
         return res.status(400).json({ mensage: response })
     }
 })
-
-
 authRouter.post('/app/associate', async (req, res) => {
     const { email, id_app } = req.body
-
- 
+    
     const authCtrl = new AuthController()
     const user = await authCtrl.findUserByEmail(email)
+    const userEmail= user.email
     const app = await authCtrl.findAppById(id_app)
-    console.log('******** Associate ********')
-    console.log(`***** USUÁRIO: ${user}`)
-    console.log(`***** APP: ${app}`)
-    authCtrl.associateUserToApp(user, app)
+    const appId= app.id_app
+    console.log(userEmail, appId)
+    const userToApp = new UserToApp()
+    userToApp.email = userEmail
+    userToApp.id_app= app.id_app
+    authCtrl.associateUserToApp(userToApp)
+    
 })
 
 authRouter.get('/sidneys_secret', AuthController.verifyToken, (req, res) => {

@@ -49,11 +49,9 @@ export class AuthController {
         const app = await getManager().findOne(App, {secret: secret})
         return app
     }
-    async associateUserToApp(user: User, app: App) {
-        console.log(user, 'APP')
-       console.log(app,'USER')
-        await getConnection().createQueryBuilder().relation(User, "app").of(user).add(app)
-        await getManager().save(user.email, app.id_app)
+    async associateUserToApp(userToApp) {
+        const userApp = await getManager().save(userToApp)
+        return userApp
     }
 
 

@@ -1,7 +1,8 @@
-import { Entity, Column, ManyToMany, JoinTable, PrimaryGeneratedColumn } from "typeorm"
+import { Entity, Column, ManyToMany, JoinTable, PrimaryGeneratedColumn, OneToMany } from "typeorm"
 import { validate } from 'email-validator'
 import { User } from './User'
 import { type } from "os";
+import { UserToApp} from './UserToApp'
 
 
 export enum STATUSAPP {
@@ -25,8 +26,8 @@ export class App {
   @Column()
   expiresIn: string;
 
-  @ManyToMany(type => User, user => user.email)
-  user: User[]
+  @OneToMany(() => UserToApp, userToApp => userToApp.app)
+    public userToApp!: UserToApp[];
 
   constructor(id_app: string, secret: string, expiresIn: string) {
     this.id_app = id_app
