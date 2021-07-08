@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import { sign } from 'jsonwebtoken'
-
 import { AuthController } from '../controller/AuthController'
 import { STATUS, User } from '../entity/User'
 import { App, STATUSAPP } from '../entity/Apps'
@@ -60,7 +59,7 @@ authRouter.post('/login', async (req, res) => {
         })
     }
 })
-//register APP 
+
 authRouter.post('/app/register', async (req, res) => {
     const { id_app, secret, expiresIn } = req.body
     const app: App = new App(id_app, secret, expiresIn)
@@ -92,6 +91,7 @@ authRouter.post('/app/register', async (req, res) => {
         return res.status(400).json({ mensage: response })
     }
 })
+
 authRouter.post('/app/associate', async (req, res) => {
     const { email, id_app } = req.body
     

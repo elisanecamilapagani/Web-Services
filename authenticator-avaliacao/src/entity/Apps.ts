@@ -1,9 +1,5 @@
 import { Entity, Column, ManyToMany, JoinTable, PrimaryGeneratedColumn, OneToMany } from "typeorm"
-import { validate } from 'email-validator'
-import { User } from './User'
-import { type } from "os";
 import { UserToApp} from './UserToApp'
-
 
 export enum STATUSAPP {
   INVALID_PASSWORD = 'The password must contain at least 8 characters, 1 uppercase character, and 1 digit',
@@ -34,7 +30,6 @@ export class App {
     this.secret = secret
     this.expiresIn = expiresIn
   }
-
 
   isValid(): STATUSAPP {
     if (this.secret === "") {

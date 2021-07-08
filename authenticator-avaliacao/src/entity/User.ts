@@ -1,7 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany } from "typeorm"
 import { randomBytes, pbkdf2Sync } from 'crypto'
 import { validate } from 'email-validator'
-import { App } from "./Apps";
 import { UserToApp} from './UserToApp'
 
 export enum STATUS {
@@ -15,8 +14,6 @@ export enum STATUS {
         
 
 }
-
-
 @Entity()
 export class User {
 

@@ -1,16 +1,10 @@
 import { NextFunction, Request, Response } from "express"
-import { getConnection, getManager } from "typeorm"
+import { getManager } from "typeorm"
 import { verify } from 'jsonwebtoken'
-
-
 import { STATUS, User } from "../entity/User"
 import { SECRET } from "../config/secret"
 import { App } from "../entity/Apps"
-
-
 export class AuthController {
-
-
 
     async registerUser(user: User): Promise<User> {
         delete user._password
@@ -22,9 +16,7 @@ export class AuthController {
             throw new Error(error)
         }
     }
-
-
-    //contruindo app 
+ 
     async registerApp(app: App): Promise<App> {
         try {
             const savedApp = await getManager().save(app)
@@ -53,8 +45,6 @@ export class AuthController {
         const userApp = await getManager().save(userToApp)
         return userApp
     }
-
-
 
     static verifyToken(req: Request, res: Response, next: NextFunction) {
         let token = req.headers['authorization']
